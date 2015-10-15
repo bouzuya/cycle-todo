@@ -1,0 +1,11 @@
+<!doctype html
+<html
+  @lang ja
+  <head
+    <title
+      Todo App in Cycle.js
+  <body
+    <div
+      @id app
+    <script
+      @src main.js
