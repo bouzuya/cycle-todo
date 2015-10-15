@@ -93,7 +93,7 @@ gulp.task 'test(dev)', (done) ->
   ]
   null
 
-gulp.task 'watch', ->
+gulp.task 'watch', ['build'], ->
   browserSync.init
     server:
       baseDir: './dist'
