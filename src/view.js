@@ -1,7 +1,11 @@
 import { h } from '@cycle/dom';
 
 function renderTodo(todo) {
-  return h('li.todo', [todo.title]);
+  const value = '' + todo.id;
+  return h('li.todo', [
+    h('input', { type: 'checkbox', value: todo.id }),
+    h('span.title', [todo.title])
+  ]);
 }
 
 function renderTodos(todos) {
