@@ -12,10 +12,6 @@ export default function(state$) {
   const vtree$ = state$.map(({ count, title, todos }) => {
     return h('div', [
       h('input.title', { value: '' }),
-      h('p', [
-        'count:',
-        h('span.count', '' + count)
-      ]),
       renderTodos(todos)
     ]);
   });
