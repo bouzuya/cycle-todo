@@ -2,18 +2,24 @@ import { Rx } from '@cycle/core';
 
 export default function(actions) {
   const { addTodo$ } = actions;
-  const todos$ = addTodo$
-    .startWith([])
-    .scan((todos, title) => {
-      const todo = { title };
-      return todos.concat([todo]);
+  const actions$ = addTodo$
+    .map((title) => {
+      return (todos) => {
+        const completed = false;
+        const id = todos.length + 1;
+        const todo = { title, id, completed };
+        return todos.concat([todo]);
+      };
     });
+  const state = [];
   const state$ = Rx.Observable
-    .combineLatest(
-      todos$,
-      (todos) => {
-        return { todos };
-      }
-    );
+    .just(state)
+    .merge(actions$)
+    .scan((todos, action) => {
+      return action(todos);
+    })
+    .map((todos) => {
+      return { todos };
+    });
   return state$;
 }
