@@ -13,6 +13,7 @@ mocha = require 'gulp-mocha'
 run = require 'run-sequence'
 source = require 'vinyl-source-stream'
 sourcemaps = require 'gulp-sourcemaps'
+stylus = require 'gulp-stylus'
 uglify = require 'gulp-uglify'
 watch = require 'gulp-watch'
 watchify = require 'watchify'
@@ -25,6 +26,7 @@ gulp.task 'build', (done) ->
     'build:src/js'
     'build:tmp/js'
     'build:bhtmls/bhtml'
+    'build:styles/styl'
     done
   ]
 
@@ -37,6 +39,11 @@ gulp.task 'build:src/js', ->
   gulp.src './src/**/*.js'
   .pipe babel()
   .pipe gulp.dest './.tmp/src'
+
+gulp.task 'build:styles/styl', ->
+  gulp.src './styles/**/*.styl'
+  .pipe stylus()
+  .pipe gulp.dest './dist/styles/'
 
 gulp.task 'build:test/coffee', ->
   gulp.src './test/**/*-test.coffee'
@@ -100,6 +107,9 @@ gulp.task 'watch', ['build'], ->
 
   watch ['./bhtmls/**/*.bhtml'], ->
     run 'build:bhtmls/bhtml'
+
+  watch ['./styles/**/*.styl'], ->
+    run 'build:styles/styl'
 
   watch ['./src/**/*.js'], ->
     gulp.src './src/**/*.js'
