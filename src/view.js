@@ -12,11 +12,16 @@ function renderTodos(todos) {
   return h('ul.todos', todos.map(renderTodo));
 }
 
+function renderCount(todos) {
+  return h('span.count', ['' + todos.filter(i => !i.completed).length]);
+}
+
 export default function(state$) {
   const vtree$ = state$.map(({ count, title, todos }) => {
     return h('div', [
       h('input.title', { value: '' }),
-      renderTodos(todos)
+      renderTodos(todos),
+      renderCount(todos)
     ]);
   });
   const responses = {
