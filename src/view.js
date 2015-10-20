@@ -7,8 +7,9 @@ function renderTodo(todo) {
     (todo.completed ? '.completed' : null),
     'item' + id
   ].filter(i => i).map(i => '.' + i).join('');
+  const checked = todo.completed ? { checked: 'checked' } : {};
   return h('li' + classList, { key: id }, [
-    h('input', { type: 'checkbox', value: id }),
+    h('input', { type: 'checkbox', value: id, ...checked }),
     h('span.title', [todo.title]),
     h('button.destroy', ['X'])
   ]);
@@ -32,7 +33,11 @@ function renderClearCompletedButton({ todos }) {
 
 export default function(state$) {
   const vtree$ = state$.map(state => {
+    const checked = state.todos.length > 0 &&
+      state.todos.filter(i => !i.completed).length === 0 ?
+      { checked: 'checked' } : {};
     return h('div', [
+      h('input.toggle', { type: 'checkbox', ...checked }),
       h('input.title', { value: '' }),
       renderTodos(state),
       renderCount(state),

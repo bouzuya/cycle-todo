@@ -1,7 +1,13 @@
 import { Rx } from '@cycle/core';
 
 export default function(actions) {
-  const { addTodo$, clearCompleted$, toggleCompleted$, destroyTodo$ } = actions;
+  const {
+    addTodo$,
+    clearCompleted$,
+    destroyTodo$,
+    toggleAll$,
+    toggleCompleted$
+  } = actions;
   const actions$ = Rx.Observable
     .merge(
       addTodo$
@@ -18,6 +24,12 @@ export default function(actions) {
       destroyTodo$
       .map(({ id }) => (todos) => {
         return todos.filter(i => i.id !== id)
+      }),
+      toggleAll$
+      .map((checked) => (todos) => {
+        return todos.map(({ id, title, completed }) => {
+          return { id, title, completed: checked };
+        });
       }),
       toggleCompleted$
       .map(({ id, completed }) => (todos) => {

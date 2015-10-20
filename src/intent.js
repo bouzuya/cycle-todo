@@ -23,7 +23,9 @@ export default function(responses) {
         return { id };
       })
       .filter(i => i),
-    toggleCompleted$: DOM.select('input[type=checkbox]').events('click')
+    toggleAll$: DOM.select('input[type=checkbox].toggle').events('click')
+      .map(e => e.target.checked),
+    toggleCompleted$: DOM.select('li input[type=checkbox]').events('click')
       .map((e) => {
         const id = getId(e.target.parentNode);
         if (!id) return null;
