@@ -1,10 +1,16 @@
 import { h } from '@cycle/dom';
 
 function renderTodo(todo) {
-  const value = '' + todo.id;
-  return h('li.todo' + (todo.completed ? '.completed' : ''), { key: todo.id }, [
-    h('input', { type: 'checkbox', value: todo.id }),
-    h('span.title', [todo.title])
+  const id = '' + todo.id;
+  const classList = [
+    'todo',
+    (todo.completed ? '.completed' : null),
+    'item' + id
+  ].filter(i => i).map(i => '.' + i).join('');
+  return h('li' + classList, { key: id }, [
+    h('input', { type: 'checkbox', value: id }),
+    h('span.title', [todo.title]),
+    h('button.destroy', ['X'])
   ]);
 }
 

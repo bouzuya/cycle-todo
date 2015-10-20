@@ -1,3 +1,9 @@
+function getId(li) {
+  const idString = li.className.replace(/^.*item(\d+).*$/, '$1');
+  if (!idString) return null;
+  return parseInt(idString, 10);
+}
+
 export default function(responses) {
   const { DOM } = responses;
   const actions = {
@@ -10,12 +16,21 @@ export default function(responses) {
       .filter(i => i.length > 0)
       .map(title => ({ title })),
     clearCompleted$: DOM.select('button.clear').events('click'),
+    destroyTodo$: DOM.select('button.destroy').events('click')
+      .map(e => {
+        const id = getId(e.target.parentNode);
+        if (!id) return null;
+        return { id };
+      })
+      .filter(i => i),
     toggleCompleted$: DOM.select('input[type=checkbox]').events('click')
       .map((e) => {
-        const id = parseInt(e.target.value, 10);
+        const id = getId(e.target.parentNode);
+        if (!id) return null;
         const completed = e.target.checked;
         return { id, completed };
       })
+      .filter(i => i)
   };
   return actions;
 }
