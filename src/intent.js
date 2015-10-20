@@ -9,6 +9,7 @@ export default function(responses) {
       .map(e => e.target.value.trim())
       .filter(i => i.length > 0)
       .map(title => ({ title })),
+    clearCompleted$: DOM.select('button.clear').events('click'),
     toggleCompleted$: DOM.select('input[type=checkbox]').events('click')
       .map((e) => {
         const id = parseInt(e.target.value, 10);

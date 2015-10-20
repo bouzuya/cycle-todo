@@ -2,7 +2,7 @@ import { h } from '@cycle/dom';
 
 function renderTodo(todo) {
   const value = '' + todo.id;
-  return h('li.todo', [
+  return h('li.todo', { key: todo.id }, [
     h('input', { type: 'checkbox', value: todo.id }),
     h('span.title', [todo.title])
   ]);

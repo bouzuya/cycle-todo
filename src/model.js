@@ -1,9 +1,13 @@
 import { Rx } from '@cycle/core';
 
 export default function(actions) {
-  const { addTodo$, toggleCompleted$ } = actions;
+  const { addTodo$, clearCompleted$, toggleCompleted$ } = actions;
   const actions$ = Rx.Observable
     .merge(
+      clearCompleted$
+      .map(() => (todos) => {
+        return todos.filter(i => !i.completed);
+      }),
       addTodo$
       .map(({ title }) => (todos) => {
         const completed = false;
