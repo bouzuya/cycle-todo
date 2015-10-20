@@ -8,20 +8,29 @@ function renderTodo(todo) {
   ]);
 }
 
-function renderTodos(todos) {
+function renderTodos({ todos }) {
   return h('ul.todos', todos.map(renderTodo));
 }
 
-function renderCount(todos) {
+function renderCount({ todos }) {
   return h('span.count', ['' + todos.filter(i => !i.completed).length]);
 }
 
+function renderClearCompletedButton({ todos }) {
+  const completed = todos.filter(i => i.completed);
+  if (completed.length === 0) return null;
+  return h('button.clear', [
+    'Clear completed (' + completed.length + ')'
+  ]);
+}
+
 export default function(state$) {
-  const vtree$ = state$.map(({ count, title, todos }) => {
+  const vtree$ = state$.map(state => {
     return h('div', [
       h('input.title', { value: '' }),
-      renderTodos(todos),
-      renderCount(todos)
+      renderTodos(state),
+      renderCount(state),
+      renderClearCompletedButton(state)
     ]);
   });
   const responses = {
