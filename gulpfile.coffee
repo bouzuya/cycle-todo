@@ -43,7 +43,7 @@ gulp.task 'build:src/js', ->
 gulp.task 'build:styles/styl', ->
   gulp.src './styles/**/*.styl'
   .pipe stylus()
-  .pipe gulp.dest './dist/styles/'
+  .pipe gulp.dest './dist'
 
 gulp.task 'build:test/coffee', ->
   gulp.src './test/**/*-test.coffee'
