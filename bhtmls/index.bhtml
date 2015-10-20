@@ -4,6 +4,9 @@
   <head
     <title
       Todo App in Cycle.js
+    <link
+      @rel stylesheet
+      @href /styles/main.css
   <body
     <div
       @id app
