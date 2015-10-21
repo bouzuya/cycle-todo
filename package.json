@@ -40,7 +40,8 @@
     "watch": "gulp watch"
   },
   "dependencies": {
-    "@cycle/core": "^3.1.0",
-    "@cycle/dom": "^5.3.1"
+    "@cycle/core": "^5.0.1",
+    "@cycle/dom": "^7.1.1",
+    "rx": "^4.0.6"
   }
 }
