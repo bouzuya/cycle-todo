@@ -42,6 +42,7 @@
   "dependencies": {
     "@cycle/core": "^5.0.1",
     "@cycle/dom": "^7.1.1",
+    "cycle-local-storage": "bouzuya/cycle-local-storage#449722265efeb2cdb3e2d81af6002c19c9f33fde",
     "rx": "^4.0.6"
   }
 }
