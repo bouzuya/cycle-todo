@@ -18,22 +18,22 @@ export default function(actions) {
         return todos.concat([todo]);
       }),
       clearCompleted$
-      .map(() => (todos) => {
+      .map(() => todos => {
         return todos.filter(i => !i.completed);
       }),
       destroyTodo$
-      .map(({ id }) => (todos) => {
+      .map(({ id }) => todos => {
         return todos.filter(i => i.id !== id)
       }),
       toggleAll$
-      .map((checked) => (todos) => {
+      .map(checked => todos => {
         return todos.map(({ id, title, completed }) => {
           return { id, title, completed: checked };
         });
       }),
       toggleCompleted$
-      .map(({ id, completed }) => (todos) => {
-        const todo = todos.filter((i) => i.id === id)[0];
+      .map(({ id, completed }) => todos => {
+        const todo = todos.filter(i => i.id === id)[0];
         todo.completed = completed;
         return todos;
       })
@@ -43,6 +43,6 @@ export default function(actions) {
     .just(state)
     .merge(actions$)
     .scan((todos, action) => action(todos))
-    .map(todos => ({ todos }))
+    .map(todos => ({ todos }));
   return state$;
 }
