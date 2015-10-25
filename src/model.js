@@ -13,7 +13,7 @@ export default function(actions) {
       addTodo$
       .map(({ title }) => (todos) => {
         const completed = false;
-        const id = todos.length + 1;
+        const id = todos.reduce(((max, i) => max < i.id ? i.id : max), 0) + 1;
         const todo = { title, id, completed };
         return todos.concat([todo]);
       }),
