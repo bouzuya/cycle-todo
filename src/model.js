@@ -5,13 +5,14 @@ export default function(actions) {
     addTodo$,
     clearCompleted$,
     destroyTodo$,
+    loadStorage$,
     toggleAll$,
     toggleCompleted$
   } = actions;
   const actions$ = Rx.Observable
     .merge(
       addTodo$
-      .map(({ title }) => (todos) => {
+      .map(({ title }) => todos => {
         const completed = false;
         const id = todos.reduce(((max, i) => max < i.id ? i.id : max), 0) + 1;
         const todo = { title, id, completed };
@@ -24,6 +25,10 @@ export default function(actions) {
       destroyTodo$
       .map(({ id }) => todos => {
         return todos.filter(i => i.id !== id)
+      }),
+      loadStorage$
+      .map(json => _ => {
+        return JSON.parse(json);
       }),
       toggleAll$
       .map(checked => todos => {
@@ -43,6 +48,7 @@ export default function(actions) {
     .just(state)
     .merge(actions$)
     .scan((todos, action) => action(todos))
-    .map(todos => ({ todos }));
+    .map(todos => ({ todos }))
+    .share();
   return state$;
 }

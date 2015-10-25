@@ -44,8 +44,12 @@ export default function(state$) {
       renderClearCompletedButton(state)
     ]);
   });
+  const storage$ = state$.map(({ todos }) => {
+    return { 'cycle-todo': JSON.stringify(todos) };
+  });
   const responses = {
-    DOM: vtree$
+    DOM: vtree$,
+    Storage: storage$
   };
   return responses;
 }

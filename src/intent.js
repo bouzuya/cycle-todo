@@ -5,7 +5,7 @@ function getId(li) {
 }
 
 export default function(responses) {
-  const { DOM } = responses;
+  const { DOM, Storage } = responses;
   const actions = {
     addTodo$: DOM.select('input.title').events('keydown')
       .filter((e) => {
@@ -23,6 +23,7 @@ export default function(responses) {
         return { id };
       })
       .filter(i => i),
+    loadStorage$: Storage.get('cycle-todo'),
     toggleAll$: DOM.select('input[type=checkbox].toggle').events('click')
       .map(e => e.target.checked),
     toggleCompleted$: DOM.select('li input[type=checkbox]').events('click')
